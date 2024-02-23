@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\dashboard\CategoryController;
+use App\Http\Controllers\dashboard\MenuItemController;
+use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('users',UserController::class);
+    Route::resource('categories',CategoryController::class);
+    Route::resource('menu_items',MenuItemController::class);
 });
+
+
 
 require __DIR__.'/auth.php';

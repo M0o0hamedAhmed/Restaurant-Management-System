@@ -23,6 +23,9 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
+                            <th>Menu Item Count</th>
+                            <th>Latest Menu Item</th>
+                            <th>Lowest Menu Item</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -31,6 +34,9 @@
                             <tr>
                                 <td>{{$category->id}}</td>
                                 <td>{{$category->name}}</td>
+                                <td>{{$category->menuItem->count()}}</td>
+                                <td>{!! $category->latestMenuItem?->name .' <br> '. $category->latestMenuItem?->price . ' EGP '!!}</td>
+                                <td>{!! $category->lowestPriceMenuItem?->name .' <br> '. $category->lowestPriceMenuItem?->price . ' EGP '!!}</td>
                                 <td>
 
                                     <div class="input-group input-group-lg mb-3">

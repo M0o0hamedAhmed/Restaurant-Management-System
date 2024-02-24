@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\MenuItemController;
+use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\Api\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,9 @@ Route::group(['middleware' => 'api'], function ($router) {
 //    Route::group(['middleware' => ['auth']], function ($router) {
         Route::apiResources([
             'user' => UserController::class,
+            'menu_items' => MenuItemController::class,
+            'orders' => OrderController::class,
         ]);
-//    });
+//    });`
 
 });

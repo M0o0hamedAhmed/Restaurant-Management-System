@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
+use App\Models\MenuItem;
 
 class CategoryController extends Controller
 {
@@ -14,6 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
 
+//        Category::query()->with('latestMenuItem')->get()->dd();
         $this->data['categories'] = Category::query()->get();
 
         return view('admin.category.index', $this->data);
@@ -50,9 +52,10 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        $this->data['category'] = Category::query()->findOrFail($id);
+
+        $this->data['category'] = $category;
 
         return view('admin.category.edit',$this->data);
 

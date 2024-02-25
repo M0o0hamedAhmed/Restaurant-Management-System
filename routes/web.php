@@ -35,6 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories',CategoryController::class);
     Route::resource('menu_items',MenuItemController::class);
     Route::resource('orders',OrderController::class);
+    Route::resource('order_items',\App\Http\Controllers\dashboard\OrderItemController::class);
+
+
+    Route::get('orders/get_products_not_in_order/{order_id}', [OrderController::class, 'getProductsNotInOrder'])->name('orders.get_products_not_in_order');
+    Route::post('orders/set_new_item_in_order', [OrderController::class, 'setNewItemInOrder'])->name('orders.set_new_item_in_order');
+
 });
 
 

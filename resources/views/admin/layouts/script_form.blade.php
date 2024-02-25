@@ -17,6 +17,8 @@
 <script src="{{asset('plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
 <!-- dropzonejs -->
 <script src="{{asset('plugins/dropzone/min/dropzone.min.js')}}"></script>
+{{--datatables--}}
+<script src="{{asset('plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
 
 <!-- Page specific script -->
 <script>

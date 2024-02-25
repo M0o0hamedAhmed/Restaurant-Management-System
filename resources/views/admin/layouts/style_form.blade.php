@@ -15,3 +15,6 @@
 <link rel="stylesheet" href="{{asset('plugins/bs-stepper/css/bs-stepper.min.css')}}">
 <!-- dropzonejs -->
 <link rel="stylesheet" href="{{asset('plugins/dropzone/min/dropzone.min.css')}}">
+{{--DataTables--}}
+<link rel="stylesheet" href="{{asset('plugins/datatable/css/jquery.dataTables.min.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">

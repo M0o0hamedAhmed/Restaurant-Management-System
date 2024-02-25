@@ -8,4 +8,6 @@
 <script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+<!-- toastr -->
+<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 @stack('scripts')

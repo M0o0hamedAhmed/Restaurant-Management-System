@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Order;
 use Illuminate\Console\Command;
 
 class UpdateOrderStatus extends Command
@@ -25,6 +26,8 @@ class UpdateOrderStatus extends Command
      */
     public function handle()
     {
-        //
+        $orders = Order::query()->whereDate('created_at' ,'<',now())->where('status','pending')->update(['status' =>'expired']);
+        $this->info('Order statuses updated successfully.');
+
     }
 }

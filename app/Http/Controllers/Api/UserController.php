@@ -40,7 +40,6 @@ class UserController extends Controller
     public function store(StoreUserRequest $storeUserRequest)
     {
         $seed = $storeUserRequest->validated();
-        $seed['roles_name'] = 'user';
         $user = User::query()->create($seed);
         return (new UserResource($user))->additional(['message' => 'success'])->response()->setStatusCode(Response::HTTP_CREATED);
     }

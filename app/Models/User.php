@@ -33,7 +33,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'phone_number',
         'password',
         'created_by',
-        'roles_name'
     ];
 
     /**
@@ -54,7 +53,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'roles_name' => 'array'
     ];
     protected $connection = 'mysql';
     protected $table = 'users';

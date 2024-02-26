@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
-@section('title','Create User')
+@section('title',trans('main.Create User'))
 @push('styles')
     @include('admin.layouts.style_form')
 @endpush
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Create User</li>
+    <li class="breadcrumb-item active">{{trans('main.Create User')}}</li>
 @endsection
 @section('content')
 
@@ -17,7 +17,7 @@
             <div class="card ">
                 <div class="card-header d-flex justify-content-end">
                     {{--                    <h3 class="card-title">Quick Example</h3>--}}
-                    <a href="{{route('users.index')}}" type="button" class="btn btn-dark ">Back</a>
+                    <a href="{{route('users.index')}}" type="button" class="btn btn-dark ">{{trans('main.Back')}}</a>
 
                 </div>
                 <!-- /.card-header -->
@@ -72,6 +72,30 @@
                             <!-- /.input group -->
                         </div>
                         <!-- /.form group -->
+
+                        <div class="col-md-6">
+                            <div class="form-group select2-blue">
+                                <label>Roles Name</label>
+                                <select name="roles[]" class="  select2" multiple="multiple"
+                                        data-placeholder="Select a State"
+                                        style="width: 100%;">
+                                    @foreach($roles as $role)
+                                        <option >{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @if($errors->has('roles'))
+                                    @foreach($errors->get('roles') as $error)
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
+                                        </a>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+
+
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
                             <input type="password" class="form-control" id="exampleInputPassword1"
@@ -81,6 +105,19 @@
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
                                         </a>
+                                @endforeach
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password Confirmation</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                   placeholder="password confirmation" name="password_confirmation" required>
+                            @if($errors->has('password_confirmation'))
+                                @foreach($errors->get('password_confirmation') as $error)
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
+                                    </a>
                                 @endforeach
                             @endif
                         </div>

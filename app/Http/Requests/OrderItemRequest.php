@@ -3,10 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
-class UpdateUserRequest extends FormRequest
+class OrderItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +21,9 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return  [
-            'name' => 'required|string|max:255',
-            'email' => ['required', Rule::unique('users')->ignore($this->user)],
-            'phone_number' => 'required',
-            'roles' => 'exists:roles,name',
+        return [
+            'order_id' => 'required|exists:orders,id',
+            'menu_item_id' => 'required|exists:menu_items,id',
         ];
     }
 }

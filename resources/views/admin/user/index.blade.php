@@ -4,7 +4,7 @@
 @endpush
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Users</li>
+    <li class="breadcrumb-item active">{{trans('main.Userse')}}</li>
 @endsection
 @section('content')
 
@@ -25,6 +25,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>phone number</th>
+                            <th>Role</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -36,6 +37,11 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->phone_number}}</td>
                                 <td>
+                                    @foreach($user->getRoleNames() as $role)
+                                        <span class="right badge badge-primary">{{$role}}</span>
+                                    @endforeach
+                                </td>
+                                <td>
 
                                     <div class="input-group input-group-lg mb-3">
                                         <div class="input-group-prepend">
@@ -44,7 +50,8 @@
                                                 Actions
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li class="dropdown-item"><a class="btn " href="{{route('users.edit',$user->id)}}">Edit</a>
+                                                <li class="dropdown-item"><a class="btn "
+                                                                             href="{{route('users.edit',$user->id)}}">Edit</a>
                                                 </li>
                                                 <form method="post" action="{{route('users.destroy',$user->id)}}">
                                                     @csrf
@@ -73,6 +80,11 @@
         </div>
         <!-- /.col -->
     </div>
+    @if ($users->hasPages())
+        <div class="pagination-wrapper  d-flex justify-content-center">
+            {{ $users->links() }}
+        </div>
+    @endif
 
 @endsection
 @push('scripts')

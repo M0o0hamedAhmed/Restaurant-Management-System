@@ -26,7 +26,7 @@ class OrderController extends Controller
 
         $this->data['orders'] = Order::query()->when($request->status,
             fn($query) => $query->where('status', $request->status)
-        )->get();
+        )->paginate(10);
         $this->data['status'] = $request->status;
         return view('admin.order.index', $this->data);
     }
@@ -36,8 +36,7 @@ class OrderController extends Controller
     {
         // Retrieve all menu items not in the given order
         $productsNotInOrder = MenuItem::whereDoesntHave('orders', function ($query) use ($order_id) {
-            $query->where('order_id', intval($order_id));
-        })->get();
+            $query->where('order_id', $order_id);})->get();
         return MenuItemResource::collection($productsNotInOrder);
     }
 
@@ -94,8 +93,8 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $order  = Order::query()->findOrFail($id)->update(['status' => 'pending']);
-        return response()->json(['x' => $order]);
+        $order  = Order::query()->findOrFail($id)->update(['status' => 'complete']);
+        return response()->json(['data' => $order]);
     }
 
     /**

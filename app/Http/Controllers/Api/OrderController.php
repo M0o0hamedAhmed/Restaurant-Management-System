@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
@@ -41,7 +41,7 @@ class OrderController extends Controller
         }
         $order->update(['total' => $total_amount]);
 
-        return "new OrderResource()";
+        return new OrderResource($order);
     }
 
 

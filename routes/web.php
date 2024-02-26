@@ -3,6 +3,7 @@
 use App\Http\Controllers\dashboard\CategoryController;
 use App\Http\Controllers\dashboard\MenuItemController;
 use App\Http\Controllers\dashboard\OrderController;
+use App\Http\Controllers\dashboard\OrderItemController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('welcome');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories',CategoryController::class);
     Route::resource('menu_items',MenuItemController::class);
     Route::resource('orders',OrderController::class);
-    Route::resource('order_items',\App\Http\Controllers\dashboard\OrderItemController::class);
+    Route::resource('order_items',OrderItemController::class);
 
 
     Route::get('orders/get_products_not_in_order/{order_id}', [OrderController::class, 'getProductsNotInOrder'])->name('orders.get_products_not_in_order');

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class UserController extends BaseController
 {
@@ -24,7 +25,7 @@ class UserController extends BaseController
      */
     public function index()
     {
-        $this->data['users'] = User::query()->get();
+        $this->data['users'] = User::query()->paginate(10);
 
         return view('admin.user.index', $this->data);
     }
@@ -34,7 +35,9 @@ class UserController extends BaseController
      */
     public function create()
     {
-        return view('admin.user.create');
+        $this->data['roles'] =Role::all();
+
+        return view('admin.user.create',$this->data);
 
     }
 
@@ -46,7 +49,9 @@ class UserController extends BaseController
 
         $data = $request->validated();
         $data['created_by'] = auth()->user()->getAuthIdentifier();
-        User::query()->create($data);
+        $user = User::query()->create($data);
+//        dd($data);
+        $user->assignRole($request->roles);
         return redirect()->route('users.index');
     }
 
@@ -65,6 +70,7 @@ class UserController extends BaseController
     public function edit(User $user)
     {
         $this->data['user'] =$user;
+        $this->data['roles'] =Role::all();
         return view('admin.user.edit',$this->data);
 
     }
@@ -74,7 +80,10 @@ class UserController extends BaseController
     public function update(UpdateUserRequest   $request, string $id)
     {
         $data = $request->validated();
-        User::query()->whereKey($id)->update($data);
+        $user = User::query()->findOrFail($id);
+        $user->update($data);
+        $user->syncRoles($request->roles);
+
         return redirect()->route('users.index');
     }
 

@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title','Orders')
+@section('title',ucfirst($status) . ' Orders')
 @push('styles')
     @include('admin.layouts.style_form')
 
@@ -79,6 +79,12 @@
         <!-- /.col -->
     </div>
 
+    @if ($orders->hasPages())
+        <div class="pagination-wrapper  d-flex justify-content-center">
+            {{ $orders->links() }}
+        </div>
+    @endif
+
 @endsection
 @push('scripts')
     @include('admin.layouts.script_form')
@@ -110,7 +116,8 @@
                 },
                 error: function (data) {
 
-                    toastr.error('{{trans('toastr.error_occurred')}}}');
+                    {{--toastr.error('{{trans('toastr.error_occurred')}}');--}}
+                    toastr.error(data);
 
                 }
 

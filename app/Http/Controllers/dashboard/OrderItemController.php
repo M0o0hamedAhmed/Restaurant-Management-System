@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderItemRequest;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderMenuItem;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class OrderItemController extends Controller
@@ -63,20 +66,18 @@ class OrderItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(OrderItemRequest $request,$id)
     {
-        $order = Order::query()->findOrFail($request->order_id)->menu_items();
-        $menu_item_price = $order->where('menu_item_id', $request->menu_item_id)->first()->price;
+        $order = Order::query()->findOrFail($request->order_id);
+//        $menu_item_price = $order->where('menu_item_id', $request->menu_item_id)->first()->price;
         if ($request->type == 'increase') {
-            $order->updateExistingPivot($request->menu_item_id,['quantity' => DB::raw('quantity + 1'),'total' => DB::raw('total + price')  ]);
+            $order->menu_items()->updateExistingPivot($request->menu_item_id,['quantity' => DB::raw('quantity + 1'),'total' => DB::raw('total + price')  ]);
         } elseif ($request->type == 'decreases') {
-            $order->updateExistingPivot($request->menu_item_id,['quantity' => DB::raw('quantity - 1') ,'total' => DB::raw('total - price') ]);
+            $order->menu_items()->updateExistingPivot($request->menu_item_id,['quantity' => DB::raw('quantity - 1') ,'total' => DB::raw('total - price') ]);
         } elseif ($request->type == 'delete') {
-            $order->detach($request->menu_item_id);
+            $order->menu_items()->detach($request->menu_item_id);
         }
-
-        return response()->json(['x' => "price", 'id' => Order::query()->findOrFail($request->order_id)->menu_items->where('id', $request->menu_item_id)]);
-//        Order::query()->findOrFail($request->order_id)->menu_items->updateExistingPivot($request->menu_item_id,['quantity' => xx  ]);
+        return (new OrderResource($order))->additional(['message' => 'success'])->response()->setStatusCode(Response::HTTP_CREATED);;
     }
 
 

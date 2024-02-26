@@ -22,9 +22,7 @@ class CategoryController extends Controller
     public function index()
     {
 
-//        Category::query()->with('latestMenuItem')->get()->dd();
         $this->data['categories'] = Category::query()->get();
-
         return view('admin.category.index', $this->data);
     }
 

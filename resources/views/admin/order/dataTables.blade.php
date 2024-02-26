@@ -253,7 +253,9 @@
                     order_id : order_id,
                     type : type,
                 }
-                console.log(order_id);
+                // console.log('data befor ajax :'data);
+                console.log("Request URL: " + "{{ route('order_items.update',"id") }}".replace("id", order_id))
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -262,7 +264,9 @@
                     url: "{{ route('order_items.update',"id") }}".replace("id", order_id),
                     data:data,
                     success: function (data) {
-                console.log(data);
+                        toastr.success('success');
+
+                        console.log(data);
                         $('#myFormAdd').trigger('reset');
                         $('#dataTable').DataTable().ajax.reload();
 
@@ -272,7 +276,7 @@
                     },
                     error: function (data) {
                         console.log(data)
-                        toastr.error('{{trans('toastr.error_occurred')}}}');
+                        toastr.error(data.responseJSON.message);
 
                     }
 

@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title','Category')
+@section('title','Categories')
 @push('styles')
 @endpush
 @section('breadcrumb')
@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-end">
                     {{--                    <h3 class="card-title">DataTable with minimal features & hover style</h3>--}}
-                    <a type="button" href="{{route('categories.create')}}" class="btn btn-info">Create Category</a>
+                    <a type="button" href="{{route('categories.create')}}" class="btn btn-info">Categories</a>
 
                 </div>
                 <!-- /.card-header -->

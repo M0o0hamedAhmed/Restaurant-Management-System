@@ -17,6 +17,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'total' => $this->total,
+            'status' => $this->status,
             'items' => OrderDetailsResource::collection($this->menu_items)
         ];
     }

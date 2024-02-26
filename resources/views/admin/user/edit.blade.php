@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
-@section('title','Create User')
+@section('title','Edit User')
 @push('styles')
     @include('admin.layouts.style_form')
 @endpush
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Create User</li>
+    <li class="breadcrumb-item active">Edit User</li>
 @endsection
 @section('content')
 
@@ -73,7 +73,28 @@
                             <!-- /.input group -->
                         </div>
 
+                        <!-- /.form-group -->
+                        <div class="col-md-6">
+                            <div class="form-group select2-blue">
+                                <label>Roles Name</label>
+                                <select name="roles[]" class="  select2" multiple="multiple"
+                                        data-placeholder="Select a State"
+                                        style="width: 100%;">
+                                    @foreach($roles as $role)
+                                        <option {{$user->hasRole($role) ? 'selected' : ''}}>{{$role->name}}</option>
+                                    @endforeach
+                                </select>
 
+{{--                                @if($errors->has('roles'))--}}
+{{--                                    @foreach($errors->get('email') as $error)--}}
+{{--                                        <a href="#" class="nav-link">--}}
+{{--                                            <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>--}}
+{{--                                        </a>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
                     </div>
                     <!-- /.card-body -->
 

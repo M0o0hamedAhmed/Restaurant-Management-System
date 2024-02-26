@@ -195,7 +195,7 @@ Project Link: [https://github.com/M0o0hamedAhmed/Restaurant-Management-System](h
 
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 

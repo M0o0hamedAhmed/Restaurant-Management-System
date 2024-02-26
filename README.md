@@ -127,6 +127,10 @@ npm run build
 ```sh
 php artisan migrate
 ```
+* run seeder for create admin
+```sh
+php artisan db:seed
+```
 
 * run project by this command
 ```sh

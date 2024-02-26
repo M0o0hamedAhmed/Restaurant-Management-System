@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
 
 class MenuItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:view menuItems'])->only('index','show');
+        $this->middleware(['can:edit menuItems'])->only('edit','update');
+        $this->middleware(['can:create menuItems'])->only('create','store');
+        $this->middleware(['can:delete menuItems'])->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

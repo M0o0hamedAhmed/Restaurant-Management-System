@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class OrderItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:view orders'])->only('index','show');
+        $this->middleware(['can:edit orders'])->only('edit','update');
+        $this->middleware(['can:create orders'])->only('create','store');
+        $this->middleware(['can:delete orders'])->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

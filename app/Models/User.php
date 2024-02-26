@@ -6,16 +6,21 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +32,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'email',
         'phone_number',
         'password',
-        'created_by'
+        'created_by',
+        'roles_user'
     ];
 
     /**
@@ -48,14 +54,14 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'roles_name' => 'array'
     ];
     protected $connection = 'mysql';
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $keyType = 'int';
-    public  $incrementing= true;
-    public  $timestamps= true;
-
+    public $incrementing = true;
+    public $timestamps = true;
 
 
     /**
@@ -81,6 +87,17 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function setPhoneNumberAttribute($value)
     {
         // Remove dashes from the phone number
-        $this->attributes['phone_number'] = '0020'.substr(str_replace(['-','_'], '', $value),-11);
+        $this->attributes['phone_number'] = '0020' . substr(str_replace(['-', '_'], '', $value), -11);
     }
+
+//    public function roles(): BelongsToMany
+//    {
+//        return $this->belongsToMany(Role::class);
+//    }
+//
+//    public function permissions() :BelongsToMany
+//    {
+//        return $this->belongsToMany(Permission::class);
+//    }
+
 }

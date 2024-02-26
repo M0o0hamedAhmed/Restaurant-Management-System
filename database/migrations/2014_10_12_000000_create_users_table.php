@@ -21,6 +21,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();
+            $table->string('roles_name');
             $table->timestamps();
             $table->softDeletes();
         });

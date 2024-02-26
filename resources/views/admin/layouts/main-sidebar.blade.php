@@ -25,6 +25,9 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
+
+
+                @can('view users')
                 <li class="nav-item">
                     <a href="{{route('users.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
@@ -33,6 +36,9 @@
                         </p>
                     </a>
                 </li>
+                @endcan
+
+                @can('view categories')
                 <li class="nav-item">
                     <a href="{{route('categories.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
@@ -41,6 +47,8 @@
                         </p>
                     </a>
                 </li>
+                @endcan
+                @can('view menuItems')
                 <li class="nav-item">
                     <a href="{{route('menu_items.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
@@ -49,6 +57,8 @@
                         </p>
                     </a>
                 </li>
+                @endcan
+                @can('view orders')
                 <li class="nav-item ">
                     <a href="#" class="nav-link ">
                         <i class="nav-icon fas fa-th"></i>
@@ -78,6 +88,8 @@
                         </li>
                     </ul>
                 </li>
+                @endcan
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

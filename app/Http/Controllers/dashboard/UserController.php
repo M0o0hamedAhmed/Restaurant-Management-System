@@ -6,15 +6,24 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->middleware(['can:view users'])->only('index','show');
+        $this->middleware(['can:edit users'])->only('edit','update');
+        $this->middleware(['can:create users'])->only('create','store');
+        $this->middleware(['can:delete users'])->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
         $this->data['users'] = User::query()->get();
 
         return view('admin.user.index', $this->data);

@@ -9,6 +9,13 @@ use App\Models\MenuItem;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:view categories'])->only('index','show');
+        $this->middleware(['can:edit categories'])->only('edit','update');
+        $this->middleware(['can:create categories'])->only('create','store');
+        $this->middleware(['can:delete categories'])->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

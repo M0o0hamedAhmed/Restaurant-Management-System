@@ -116,9 +116,9 @@ composer install
 ```sh
 npm install
 ```
-* npm build
+* npm dev
 ```sh
-npm run build
+npm run dev
 ```
 
 * make database and put [db name,db user,db password] in .env file

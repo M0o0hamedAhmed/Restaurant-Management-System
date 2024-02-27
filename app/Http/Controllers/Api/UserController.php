@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
 {
@@ -29,8 +31,14 @@ class UserController extends BaseController
     public function store(StoreUserRequest $storeUserRequest)
     {
         $seed = $storeUserRequest->validated();
-        $user = User::query()->create($seed);
-        return (new UserResource($user))->additional(['message' => 'success'])->response()->setStatusCode(Response::HTTP_CREATED);
+        try {
+            $user = User::query()->create($seed);
+            Log::info("Create User: user created successfully with id {$user->id} ");
+            return $this->sendResponse(new UserResource($user));
+        } catch (\Exception $e) {
+            Log::error("Create User : system can not   Create User for this error {$e->getMessage()}");
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**
@@ -40,23 +48,35 @@ class UserController extends BaseController
      */
     public function show(User $user)
     {
-        return (new UserResource($user))->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);
+        return $this->sendResponse(new UserResource($user));
     }
 
 
     public function update(UpdateUserRequest $updateUserRequest, User $user)
     {
         $valid_data = $updateUserRequest->validated();
-        $user->update($valid_data);
-        return (new UserResource($user))->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);
+        try {
+            $user->update($valid_data);
+            Log::info("Update User: user updated successfully with id {$user->id} ");
+            return $this->sendResponse(new UserResource($user));
+        } catch (\Exception $e) {
+            Log::error("Update User : system can not update User for this error {$e->getMessage()}");
+            return $this->sendError($e->getMessage());
+        }
+
     }
 
 
     public function destroy(User $user)
     {
-        $user->delete();
-        return  $this->sendResponse('','User deleted successfully.');
+        try {
+            $user->delete();
+            Log::info("Delete User: user delete successfully with id {$user->id} ");
+            return $this->sendResponse('', 'User deleted successfully.');
+        } catch (\Exception $e) {
+            Log::error("Delete User : system can not  delete User for this error {$e->getMessage()}");
+            return $this->sendError($e->getMessage());
+        }
 
     }
 }
-

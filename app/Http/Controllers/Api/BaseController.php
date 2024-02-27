@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 class BaseController extends Controller
 {
 
-    public function sendResponse($result, $message, $code = 200): JsonResponse
+    public function sendResponse($result, $message = 'success', $code = 200): JsonResponse
     {
 
         $response = [
@@ -35,7 +35,7 @@ class BaseController extends Controller
         return Response()->json($response, $code);
     }
 
-    public function sendPaginatedResponse($result, $message, $code = 200): JsonResponse
+    public function sendPaginatedResponse($result, $message ='success', $code = 200): JsonResponse
     {
 
         $response = [

@@ -37,7 +37,7 @@ class AuthController extends BaseController
 
     public function me()
     {
-        return (new UserResource(auth()->user()))->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);
+        return $this->sendResponse(new UserResource(auth()->user()));
     }
 
     /**

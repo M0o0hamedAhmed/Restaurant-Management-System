@@ -27,8 +27,7 @@ class UpdateOrderStatus extends Command
      */
     public function handle()
     {
-//        Permission::create(['name' => 'edit articles']);
-        $orders = Order::query()->whereDate('created_at' ,'<',now())->where('status','pending')->update(['status' =>'expired']);
+        $orders = Order::query()->where('created_at' ,'<', now()->subHours(24))->where('status','pending')->update(['status' =>'expired']);
         $this->info('Order statuses updated successfully.');
 
     }

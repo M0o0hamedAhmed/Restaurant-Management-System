@@ -57,10 +57,10 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control"
+                                <input type="number" class="form-control"
                                        name="phone_number"
                                        placeholder="Enter mobile number "
-                                       value="{{old('phone_number')}}" min="10" required>
+                                       value="{{old('phone_number')}}" min="10" max="12" required>
                                 @if($errors->has('phone_number'))
                                     @foreach($errors->get('phone_number') as $error)
                                         <a href="#" class="nav-link">

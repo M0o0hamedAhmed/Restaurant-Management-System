@@ -151,6 +151,11 @@ php artisan serve
   admin
   ```
 
+* for schedule old order run following command
+```sh
+php artisan  schedule:work
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 

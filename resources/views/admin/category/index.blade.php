@@ -12,9 +12,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-end">
-                    {{--                    <h3 class="card-title">DataTable with minimal features & hover style</h3>--}}
-                    <a type="button" href="{{route('categories.create')}}" class="btn btn-info">Categories</a>
-
+                    <a type="button" href="{{route('categories.create')}}" class="btn btn-info">Add Category</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -35,8 +33,8 @@
                                 <td>{{$category->id}}</td>
                                 <td>{{$category->name}}</td>
                                 <td>{{$category->menuItem->count()}}</td>
-                                <td>{!! $category->latestMenuItem?->name .' <br> '. $category->latestMenuItem?->price . ' EGP '!!}</td>
-                                <td>{!! $category->lowestPriceMenuItem?->name .' <br> '. $category->lowestPriceMenuItem?->price . ' EGP '!!}</td>
+                                <td>{!! $category?->latestMenuItem?->name .' <br> '. $category?->latestMenuItem?->price . ' EGP '!!}</td>
+                                <td>{!! $category?->lowestPriceMenuItem?->name .' <br> '. $category?->lowestPriceMenuItem?->price . ' EGP '!!}</td>
                                 <td>
 
                                     <div class="input-group input-group-lg mb-3">
@@ -55,11 +53,9 @@
                                                         <button class="btn" type="submit">Delete</button>
                                                     </li>
                                                 </form>
-                                                {{--                                        <li class="dropdown-divider"></li>--}}
                                             </ul>
                                         </div>
                                         <!-- /btn-group -->
-                                        {{--                                <input type="text" class="form-control">--}}
                                     </div>
                                 </td>
 

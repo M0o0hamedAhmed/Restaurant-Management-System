@@ -23,14 +23,15 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-//    public function menu_item()
-//    {
-//        $this->belongsToMany(OrderMenuItem::class)->withPivot(['quantity', 'price', 'total']);
-//    }
 
     public function menu_items()
     {
         return $this->belongsToMany(MenuItem::class, 'order_menu_item', 'order_id', 'menu_item_id')->withPivot('id','quantity', 'price', 'total');
+    }
+
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
     }
 
 

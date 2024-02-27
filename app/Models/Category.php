@@ -36,4 +36,10 @@ class Category extends Model
         return $this->hasOne(MenuItem::class)->ofMany('price','min');
     }
 
+
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
+    }
+
 }

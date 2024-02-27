@@ -8,7 +8,7 @@ use App\Http\Resources\OrderResource;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\OrderMenuItem;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrderController extends Controller
 {
@@ -41,7 +41,7 @@ class OrderController extends Controller
         }
         $order->update(['total' => $total_amount]);
 
-        return new OrderResource($order);
+        return (new OrderResource($order))->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);;
     }
 
 

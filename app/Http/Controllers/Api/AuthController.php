@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthRequest;
+use App\Http\Resources\UserResource;
+use Illuminate\Http\Response;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /**
      * Create a new AuthController instance.
@@ -22,24 +24,20 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(AuthRequest $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $request->validated();
         if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return $this->sendError('Unauthorized');
         }
+       return $this->sendResponse($this->respondWithToken($token)->getData(),'Successfully logged out');
 
-        return $this->respondWithToken($token);
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function me()
     {
-        return response()->json(auth()->user());
+        return (new UserResource(auth()->user()))->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -51,7 +49,8 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+       return $this->sendResponse('','Successfully logged out');
+
     }
 
     /**
@@ -61,7 +60,8 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+      return  $this->sendResponse($this->respondWithToken(auth()->refresh()),'Successfully logged out');
+
     }
 
     /**

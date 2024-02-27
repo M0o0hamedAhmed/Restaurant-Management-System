@@ -18,20 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'api'], function ($router) {
-
-    Route::group(['prefix' => 'auth'], function ($router) {
-        Route::post('login', [AuthController::class, 'login']);
-        Route::post('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
-        Route::post('me', [AuthController::class, 'me']);
+    Route::controller(AuthController::class)->prefix('auth')->group(function () {
+        Route::post('login', 'login');
+        Route::post('logout', 'logout');
+        Route::post('refresh', 'refresh');
+        Route::get('me', 'me');
     });
 
-//    Route::group(['middleware' => ['auth']], function ($router) {
-        Route::apiResources([
-            'user' => UserController::class,
-            'menu_items' => MenuItemController::class,
-            'orders' => OrderController::class,
-        ]);
-//    });`
+    Route::apiResources([
+        'user' => UserController::class,
+        'menu_items' => MenuItemController::class,
+        'orders' => OrderController::class,
+    ]);
 
 });

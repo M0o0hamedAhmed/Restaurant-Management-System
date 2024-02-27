@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MenuItemResource;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MenuItemController extends Controller
 {
@@ -20,6 +21,6 @@ class MenuItemController extends Controller
                 fn($query) => $query->orderBy('price'),
                 fn($query) => $query->orderBy('price', 'DESC'))
             ->get();
-        return MenuItemResource::collection($menu_items);
+        return MenuItemResource::collection($menu_items)->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);;
     }
 }

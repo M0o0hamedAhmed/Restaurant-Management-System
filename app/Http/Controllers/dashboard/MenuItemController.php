@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StoreMenuItemRequest;
 use App\Models\Category;
 use App\Models\MenuItem;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MenuItemController extends Controller
 {
+    private $classView;
     public function __construct()
     {
+        $this->classView = 'admin.menu_item.';
         $this->middleware(['can:view menuItems'])->only('index','show');
         $this->middleware(['can:edit menuItems'])->only('edit','update');
         $this->middleware(['can:create menuItems'])->only('create','store');
@@ -24,9 +26,9 @@ class MenuItemController extends Controller
     public function index()
     {
 
-        $this->data['menu_items'] = MenuItem::query()->get();
+        $menu_items = MenuItem::query()->get();
 
-        return view('admin.menu_item.index', $this->data);
+        return view($this->classView.'index', compact('menu_items'));
     }
 
     /**
@@ -34,8 +36,8 @@ class MenuItemController extends Controller
      */
     public function create()
     {
-        $this->data['categories']  = Category::query()->get();
-        return view('admin.menu_item.create',$this->data);
+        $categories  = Category::query()->get();
+        return view($this->classView.'create',compact('categories'));
 
     }
 
@@ -46,27 +48,28 @@ class MenuItemController extends Controller
     {
 
         $data = $request->validated();
-        MenuItem::query()->create($data);
+        try {
+            $menu_item = MenuItem::query()->create($data);
+            Log::info("Create MenuItem: MenuItem created successfully with id {$menu_item->id} by user id ". Auth::id() . ' and  name is '. Auth::user()->name);
+        }catch (\Exception $e){
+            Log::error("Create MenuItem : system can not   create MenuItem for this error {$e->getMessage()}");
+
+            abort(500);
+        }
+
         return redirect()->route('menu_items.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(MenuItem $menuItem)
     {
-        $this->data['menu_item'] = $menuItem;
-        $this->data['categories'] = Category::query()->get();
+        $menu_item = $menuItem;
+        $categories = Category::query()->get();
 
-        return view('admin.menu_item.edit',$this->data);
+        return view($this->classView.'edit',compact('menu_item','categories'));
 
     }
 
@@ -76,7 +79,14 @@ class MenuItemController extends Controller
     public function update(StoreMenuItemRequest   $request, MenuItem $menuItem)
     {
         $data = $request->validated();
-        $menuItem->update($data);
+        try {
+            $menuItem->update($data);
+            Log::info("Update MenuItem: MenuItem updated successfully with id {$menuItem->id} by user id ". Auth::id() . ' and  name is '. Auth::user()->name);
+        }catch (\Exception $e){
+            Log::error("Update MenuItem : system can not   Update MenuItem for this error {$e->getMessage()}");
+
+            abort(500);
+        }
         return redirect()->route('menu_items.index');
     }
 
@@ -85,7 +95,14 @@ class MenuItemController extends Controller
      */
     public function destroy(string $id)
     {
-        MenuItem::query()->whereKey($id)->delete();
+        try {
+            MenuItem::query()->whereId($id)->delete();
+            Log::info("Delete MenuItem: MenuItem deleted successfully with id {$id} by user id ". Auth::id() . ' and  name is '. Auth::user()->name);
+        }catch (\Exception $e){
+            Log::error("Delete MenuItem : system can not   Delete MenuItem for this error {$e->getMessage()}");
+            abort(500);
+        }
+
         return redirect()->route('menu_items.index');
 
     }

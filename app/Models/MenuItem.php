@@ -16,6 +16,7 @@ class MenuItem extends Model
         'price',
         'category_id'
     ];
+    protected  $table = 'menu_items';
 
     /**
      * Get the category that owns the menu item.
@@ -30,4 +31,8 @@ class MenuItem extends Model
     }
 
 
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
+    }
 }

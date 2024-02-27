@@ -2,19 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
-use Throwable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
@@ -54,11 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    protected $connection = 'mysql';
     protected $table = 'users';
-    protected $primaryKey = 'id';
-    protected $keyType = 'int';
-    public $incrementing = true;
     public $timestamps = true;
 
 
@@ -97,5 +87,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 //    {
 //        return $this->belongsToMany(Permission::class);
 //    }
+
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
+    }
 
 }

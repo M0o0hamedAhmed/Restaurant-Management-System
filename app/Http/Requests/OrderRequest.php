@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\MenuItem;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderRequest extends FormRequest
@@ -23,7 +24,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'menu_items' => 'required|array',
-            'menu_items.*.menu_item_id' => 'required|exists:menu_items,id',
+            'menu_items.*.menu_item_id' => 'required|exists:'.MenuItem::getTableName().',id',
             'menu_items.*.quantity' => 'required|min:1|integer',
         ];
     }

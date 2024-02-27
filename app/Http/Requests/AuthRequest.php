@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMenuItemRequest extends FormRequest
+class AuthRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,8 @@ class StoreMenuItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'category_id' => 'required|exists:'.Category::getTableName().',id'
+            'email' => 'required|email|exists:'.User::getTableName().',email',
+            'password' => 'required',
         ];
     }
 }

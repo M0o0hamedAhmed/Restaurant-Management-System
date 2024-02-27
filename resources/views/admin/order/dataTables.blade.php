@@ -28,7 +28,7 @@
                         </div>
                     @endif
                     <button id="add_grade" type="button" class="button x-small btn btn-primary"  data-id="{{$order->id}}" data-toggle="modal" data-target="#addModel">
-                        {{ trans('grades.add_Grade') }}
+                        {{ trans('main.add menu item') }}
                     </button>
                     <br><br>
                     <div class="table-responsive">

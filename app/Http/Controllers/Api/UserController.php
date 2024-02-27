@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -24,18 +22,9 @@ class UserController extends Controller
 
     public function index()
     {
-        return UserResource::collection(User::all());
+        return UserResource::collection(User::query()->paginate(10));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(StoreUserRequest $storeUserRequest)
-    {
-        //
-    }
 
     public function store(StoreUserRequest $storeUserRequest)
     {
@@ -51,32 +40,22 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        return (new UserResource($user))->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     public function update(UpdateUserRequest $updateUserRequest, User $user)
     {
         $valid_data = $updateUserRequest->validated();
         $user->update($valid_data);
-        return (new UserResource($user))->additional(['message' => 'success'])->response()->setStatusCode(Response::HTTP_CREATED);
+        return (new UserResource($user))->additional(['message' => 'success','status' => true])->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
 
     public function destroy(User $user)
     {
         $user->delete();
-        return response()->json(['message' => 'User deleted successfully.'], Response::HTTP_OK);
+        return  $this->sendResponse('','User deleted successfully.');
 
     }
 }

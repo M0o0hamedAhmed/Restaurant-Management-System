@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name"
+                            <input type="text" class="form-control  {{$errors->get('name') ?  'border-danger ': ''}}" id="name" placeholder="Enter Name" name="name"
                                    value="{{old('name',"")}}" required>
                             @if($errors->has('name'))
                                 @foreach($errors->get('name') as $error)
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Description</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter Description"
+                            <input type="text" class="form-control  {{$errors->get('description') ?  'border-danger ': ''}}" id="name" placeholder="Enter Description"
                                    name="description"
                                    value="{{old('description',"")}}" required>
                             @if($errors->has('description'))
@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Price</label>
-                            <input type="number" class="form-control" id="name" placeholder="Enter Price" name="price"
+                            <input type="number" class="form-control  {{$errors->get('price') ?  'border-danger ': ''}}" id="name" placeholder="Enter Price" name="price"
                                    value="{{old('price',"")}}" required>
                             @if($errors->has('price'))
                                 @foreach($errors->get('price') as $error)

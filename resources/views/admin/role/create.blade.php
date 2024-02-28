@@ -49,7 +49,7 @@
                                     @endforeach
                                 </select>
 
-                                @if($errors->has('pe'))
+                                @if($errors->has('permissions'))
                                     @foreach($errors->get('permissions') as $error)
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>

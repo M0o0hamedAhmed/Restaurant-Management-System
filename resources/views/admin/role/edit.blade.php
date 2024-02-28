@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name"
+                            <input type="text" class="form-control  {{$errors->get('name') ?  'border-danger ': ''}}" id="name" placeholder="Enter Name" name="name"
                                    value="{{$role->name }}" required>
                             @if($errors->has('name'))
                                 @foreach($errors->get('name') as $error)

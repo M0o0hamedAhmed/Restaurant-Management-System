@@ -26,7 +26,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name"
+                            <input type="text" class="form-control {{$errors->get('name') ?  'border-danger ': ''}}" id="name" placeholder="Enter Name" name="name"
                                    value="{{old('name',"")}}" required>
                             @if($errors->has('name'))
                                 @foreach($errors->get('name') as $error)
@@ -38,7 +38,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                            <input type="email" class="form-control  {{$errors->get('email') ?  'border-danger ': ''}}" id="exampleInputEmail1"
+                                   placeholder="Enter email"
                                    name="email" value="{{old('email','')}}" required>
                             @if($errors->has('email'))
                                 @foreach($errors->get('email') as $error)
@@ -56,10 +57,10 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="number" class="form-control"
+                                <input type="number" class="form-control  {{$errors->get('phone_number') ?  'border-danger ': ''}}"
                                        name="phone_number"
                                        placeholder="Enter mobile number "
-                                       value="{{old('phone_number')}}" min="10" max="12" required>
+                                       value="{{old('phone_number')}}" required>
                                 @if($errors->has('phone_number'))
                                     @foreach($errors->get('phone_number') as $error)
                                         <a href="#" class="nav-link">
@@ -79,7 +80,7 @@
                                         data-placeholder="Select a State"
                                         style="width: 100%;">
                                     @foreach($roles as $role)
-                                        <option >{{$role->name}}</option>
+                                        <option>{{$role->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -97,20 +98,20 @@
 
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1"
+                            <input type="password" class="form-control  {{$errors->get('password') ?  'border-danger ': ''}}" id="exampleInputPassword1"
                                    placeholder="Password" name="password" required>
                             @if($errors->has('password'))
                                 @foreach($errors->get('password') as $error)
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                        </a>
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
+                                    </a>
                                 @endforeach
                             @endif
                         </div>
 
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password Confirmation</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1"
+                            <input type="password" class="form-control  {{$errors->get('password_confirmation') ?  'border-danger ': ''}}" id="exampleInputPassword1"
                                    placeholder="password confirmation" name="password_confirmation" required>
                             @if($errors->has('password_confirmation'))
                                 @foreach($errors->get('password_confirmation') as $error)

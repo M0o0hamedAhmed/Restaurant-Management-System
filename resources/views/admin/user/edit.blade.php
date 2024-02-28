@@ -28,7 +28,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name"
+                            <input type="text" class="form-control  {{$errors->get('name') ?  'border-danger ': ''}}" id="name" placeholder="Enter Name" name="name"
                                    value="{{$user->name }}" required>
                             @if($errors->has('name'))
                                 @foreach($errors->get('name') as $error)
@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                            <input type="email" class="form-control  {{$errors->get('email') ?  'border-danger ': ''}}" id="exampleInputEmail1" placeholder="Enter email"
                                    name="email" value="{{$user->email}}" required>
                             @if($errors->has('email'))
                                 @foreach($errors->get('email') as $error)
@@ -58,7 +58,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control  {{$errors->get('phone_number') ?  'border-danger ': ''}}"
                                        name="phone_number"
                                        placeholder="Enter mobile number "
                                        value="{{$user->phone_number}}" min="10" required>
@@ -85,13 +85,13 @@
                                     @endforeach
                                 </select>
 
-{{--                                @if($errors->has('roles'))--}}
-{{--                                    @foreach($errors->get('email') as $error)--}}
-{{--                                        <a href="#" class="nav-link">--}}
-{{--                                            <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>--}}
-{{--                                        </a>--}}
-{{--                                    @endforeach--}}
-{{--                                @endif--}}
+                                @if($errors->has('roles'))
+                                    @foreach($errors->get('roles') as $error)
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
+                                        </a>
+                                    @endforeach
+                                @endif
                             </div>
                             <!-- /.form-group -->
                         </div>

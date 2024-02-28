@@ -27,8 +27,8 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::apiResources([
         'user' => UserController::class,
-        'api_menu_items' => MenuItemController::class,
-        'api_orders' => OrderController::class,
+        'menu_items' => MenuItemController::class,
+        'orders' => OrderController::class,
     ]);
 
 });

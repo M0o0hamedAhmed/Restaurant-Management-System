@@ -6,8 +6,6 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
@@ -24,7 +22,7 @@ class UserController extends BaseController
 
     public function index()
     {
-        return UserResource::collection(User::query()->paginate(10));
+        return $this->sendPaginatedResponse(UserResource::collection(User::query()->paginate(10)));
     }
 
 

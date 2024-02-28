@@ -4,6 +4,8 @@ use App\Http\Controllers\dashboard\CategoryController;
 use App\Http\Controllers\dashboard\MenuItemController;
 use App\Http\Controllers\dashboard\OrderController;
 use App\Http\Controllers\dashboard\OrderItemController;
+use App\Http\Controllers\dashboard\PermissionController;
+use App\Http\Controllers\dashboard\RoleController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('roles', RoleController::class);
     Route::resource('menu_items', MenuItemController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('order_items', OrderItemController::class);

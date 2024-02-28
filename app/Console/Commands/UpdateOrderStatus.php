@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Order;
 use Illuminate\Console\Command;
-use Spatie\Permission\Models\Permission;
 
 class UpdateOrderStatus extends Command
 {

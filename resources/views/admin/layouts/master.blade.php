@@ -20,7 +20,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             @section('breadcrumb')
-                                <li class="breadcrumb-item"><a href="#">Control Panel</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Main</a></li>
                             @show
                         </ol>
                     </div><!-- /.col -->

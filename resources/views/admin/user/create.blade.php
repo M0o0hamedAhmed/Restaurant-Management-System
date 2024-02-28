@@ -16,7 +16,6 @@
             <!-- general form elements -->
             <div class="card ">
                 <div class="card-header d-flex justify-content-end">
-                    {{--                    <h3 class="card-title">Quick Example</h3>--}}
                     <a href="{{route('users.index')}}" type="button" class="btn btn-dark ">{{trans('main.Back')}}</a>
 
                 </div>

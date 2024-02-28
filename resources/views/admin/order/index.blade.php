@@ -1,12 +1,15 @@
+@php
+    $title =  ucfirst($status) . ' ' . __('Orders')
+@endphp
 @extends('admin.layouts.master')
-@section('title',ucfirst($status) . ' Orders')
+@section('title',$title)
 @push('styles')
     @include('admin.layouts.style_form')
 
 @endpush
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">{{$status}} Orders</li>
+    <li class="breadcrumb-item active">{{$title}} </li>
 @endsection
 @section('content')
 
@@ -14,20 +17,17 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-end">
-                    {{--                    <h3 class="card-title">DataTable with minimal features & hover style</h3>--}}
-                    {{--                    <a type="button" href="{{route('categories.create')}}" class="btn btn-info">Create Category</a>--}}
-
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="order_table" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>User Name</th>
-                            <th>Total</th>
-                            <th>created at</th>
-                            <th>Actions</th>
+                            <th>{{__('ID')}}</th>
+                            <th>{{__('User Name')}}</th>
+                            <th>{{__('Total')}}</th>
+                            <th>{{__('created at')}}</th>
+                            <th>{{__('Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -51,18 +51,9 @@
                                                 <li class="dropdown-item">
                                                     <a class="change_order_status btn " data-order-id="{{$order->id}}">Complete</a>
                                                 </li>
-                                                {{--                                                <form method="post" action="{{route('orders.destroy',$order->id)}}">--}}
-                                                {{--                                                    @csrf--}}
-                                                {{--                                                    @method('delete')--}}
-                                                {{--                                                    <li class="dropdown-item">--}}
-                                                {{--                                                        <button class="btn" type="submit">Delete</button>--}}
-                                                {{--                                                    </li>--}}
-                                                {{--                                                </form>--}}
-                                                {{--                                        <li class="dropdown-divider"></li>--}}
                                             </ul>
                                         </div>
                                         <!-- /btn-group -->
-                                        {{--                                <input type="text" class="form-control">--}}
                                     </div>
                                 </td>
 
@@ -89,8 +80,8 @@
 @push('scripts')
     @include('admin.layouts.script_form')
 
-    <script >
-        $('.change_order_status').on('click',function (e){
+    <script>
+        $('.change_order_status').on('click', function (e) {
             e.preventDefault();
             let id = $(this).data('order-id')
             $.ajax({
@@ -100,28 +91,21 @@
                 type: "PUT",
                 url: "{{ route('orders.update',"id") }}".replace("id", id),
                 success: function (data) {
-                    $('#order_'+id).remove();
+                    $('#order_' + id).remove();
                     toastr.success('{{trans('toastr.complete order')}}');
-
-
-                    // $.each(items, function (index, item) {
-                    //     // console.log(item);
-                    //     let optionText = item.name + ' - $' + item.price;
-                    //     $('#selectOption').append($('<option>', {
-                    //         value: item.id,
-                    //         text: optionText
-                    //     }));
-                    // });
-
                 },
                 error: function (data) {
-
-                    {{--toastr.error('{{trans('toastr.error_occurred')}}');--}}
-                    toastr.error(data);
-
                 }
 
             })
+        });
+
+        $(function () {
+            $("#order_table").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#order_table_wrapper .col-md-6:eq(0)');
+
         });
 
     </script>

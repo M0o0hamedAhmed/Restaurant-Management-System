@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Http\Resources\UserResource;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends BaseController
 {
@@ -26,11 +26,18 @@ class AuthController extends BaseController
      */
     public function login(AuthRequest $request)
     {
-        $credentials = $request->validated();
-        if (! $token = auth('api')->attempt($credentials)) {
-            return $this->sendError('Unauthorized');
+            $credentials = $request->validated();
+        try {
+            if (! $token = auth('api')->attempt($credentials)) {
+                return $this->sendError('Unauthorized');
+            }
+            Log::info("Log in : Logged in Successfully by  user id ".Auth::id());
+            return $this->sendResponse($this->respondWithToken($token)->getData(),'Successfully logged in');
+        }catch (\Exception $e){
+            Log::info("Login : System can not  Logged in For this error {$e->getMessage()}");
+            return  $this->sendError($e->getMessage());
         }
-       return $this->sendResponse($this->respondWithToken($token)->getData(),'Successfully logged out');
+
 
     }
 

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'api'], function ($router) {
     Route::controller(AuthController::class)->prefix('auth')->group(function () {
-        Route::post('login', 'login');
+        Route::post('login', 'login')->middleware('throttle:10,1');
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
         Route::get('me', 'me');

@@ -1,10 +1,10 @@
 @extends('admin.layouts.master')
-@section('title','Users')
+@section('title','Permissions')
 @push('styles')
 @endpush
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">{{trans('Users')   . __('x')}}  </li>
+    <li class="breadcrumb-item active">Permissions</li>
 @endsection
 @section('content')
 
@@ -12,9 +12,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-end">
-                    {{--                    <h3 class="card-title">DataTable with minimal features & hover style</h3>--}}
-                    <a type="button" href="{{route('users.create')}}" class="btn btn-info">Create User</a>
-
+                    <a type="button" href="{{route('permissions.create')}}" class="btn btn-info">Add Permission</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -23,24 +21,14 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>phone number</th>
-                            <th>Role</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($users as $user)
+                        @foreach($permissions as $permission)
                             <tr>
-                                <td>{{$user->id}}</td>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->phone_number}}</td>
-                                <td>
-                                    @foreach($user->getRoleNames() as $role)
-                                        <span class="right badge badge-primary">{{$role}}</span>
-                                    @endforeach
-                                </td>
+                                <td>{{$permission->id}}</td>
+                                <td>{{$permission->name}}</td>
                                 <td>
 
                                     <div class="input-group input-group-lg mb-3">
@@ -50,21 +38,18 @@
                                                 Actions
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li class="dropdown-item"><a class="btn "
-                                                                             href="{{route('users.edit',$user->id)}}">Edit</a>
+                                                <li class="dropdown-item"><a class="btn " href="{{route('permissions.edit',$permission->id)}}">Edit</a>
                                                 </li>
-                                                <form method="post" action="{{route('users.destroy',$user->id)}}">
+                                                <form method="post" action="{{route('permissions.destroy',$permission->id)}}">
                                                     @csrf
                                                     @method('delete')
                                                     <li class="dropdown-item">
                                                         <button class="btn" type="submit">Delete</button>
                                                     </li>
                                                 </form>
-                                                {{--                                        <li class="dropdown-divider"></li>--}}
                                             </ul>
                                         </div>
                                         <!-- /btn-group -->
-                                        {{--                                <input type="text" class="form-control">--}}
                                     </div>
                                 </td>
 
@@ -80,11 +65,6 @@
         </div>
         <!-- /.col -->
     </div>
-    @if ($users->hasPages())
-        <div class="pagination-wrapper  d-flex justify-content-center">
-            {{ $users->links() }}
-        </div>
-    @endif
 
 @endsection
 @push('scripts')

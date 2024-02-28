@@ -1,14 +1,13 @@
 @extends('admin.layouts.master')
-@section('title','Edit Order')
+@section('title',__('Edit Order'))
 @push('styles')
 
         @include('admin.layouts.style_form')
-{{--        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">--}}
 
 @endpush
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Edit Order</li>
+    <li class="breadcrumb-item active">{{__('Edit Order')}}</li>
 @endsection
 @section('content')
     <!-- row -->
@@ -27,7 +26,7 @@
                             </ul>
                         </div>
                     @endif
-                    <button id="add_grade" type="button" class="button x-small btn btn-primary"  data-id="{{$order->id}}" data-toggle="modal" data-target="#addModel">
+                    <button id="add_menu_item" type="button" class="button x-small btn btn-primary"  data-id="{{$order->id}}" data-toggle="modal" data-target="#addModel">
                         {{ trans('main.add menu item') }}
                     </button>
                     <br><br>
@@ -36,11 +35,11 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th> {{trans('grades.Product Name')}}</th>
-                                <th> {{trans('grades.Quantity')}}</th>
-                                <th> {{trans('grades.price')}}</th>
-                                <th> {{trans('grades.total')}}</th>
-                                <th> {{trans('grades.action')}}</th>
+                                <th> {{trans('main.Product Name')}}</th>
+                                <th> {{trans('main.Quantity')}}</th>
+                                <th> {{trans('main.price')}}</th>
+                                <th> {{trans('main.total')}}</th>
+                                <th> {{trans('main.action')}}</th>
                             </tr>
                             </thead>
                         </table>
@@ -55,7 +54,7 @@
                                 <div class="modal-header">
                                     <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
                                         id="exampleModalLabel">
-                                        {{ trans('grades.add_Grade') }}
+                                        {{ trans('main.Add Menu Item') }}
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -75,7 +74,7 @@
                                             </div>
                                             <div class="col">
                                                 <label for="Quantity"
-                                                       class="mr-sm-2">{{ trans('grades.Quantity') }}
+                                                       class="mr-sm-2">{{ trans('main.Quantity') }}
                                                     :</label>
                                                 <input type="number" class="form-control" name="quantity" required>
                                             </div>
@@ -84,9 +83,9 @@
                                         <br><br>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">{{ trans('grades.Close') }}</button>
+                                                    data-dismiss="modal">{{ trans('main.Close') }}</button>
                                             <button type="submit"
-                                                    class="btn btn-success">{{ trans('grades.submit') }}</button>
+                                                    class="btn btn-success">{{ trans('main.submit') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -105,7 +104,7 @@
                                 <div class="modal-header">
                                     <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
                                         id="exampleModalLabel">
-                                        {{ trans('grades.edit_Grade') }}
+                                        {{ trans('main.edit_Grade') }}
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -119,13 +118,13 @@
                                         <div class="row">
                                             <div class="col">
                                                 <label for="Name"
-                                                       class="mr-sm-2">{{ trans('grades.stage_name_ar') }}
+                                                       class="mr-sm-2">{{ trans('main.stage_name_ar') }}
                                                     :</label>
                                                 <input id="Name" type="text" name="Name" class="form-control">
                                             </div>
                                             <div class="col">
                                                 <label for="Name_en"
-                                                       class="mr-sm-2">{{ trans('grades.stage_name_en') }}
+                                                       class="mr-sm-2">{{ trans('main.stage_name_en') }}
                                                     :</label>
                                                 <input type="text" class="form-control" name="Name_en" required>
                                             </div>
@@ -133,9 +132,9 @@
                                         <br><br>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">{{ trans('grades.Close') }}</button>
+                                                    data-dismiss="modal">{{ trans('main.Close') }}</button>
                                             <button type="submit"
-                                                    class="btn btn-success">{{ trans('grades.submit') }}</button>
+                                                    class="btn btn-success">{{ trans('main.submit') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -154,7 +153,6 @@
 @push('scripts')
         @include('admin.layouts.script_form')
         <!-- datatables -->
-{{--        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>--}}
 
         <script>
             // Show All Data
@@ -164,7 +162,6 @@
                     serverSide: true,
                     searching: false, // Disable search input
                     paging: false, // Disable pagination
-                    {{--ajax: '{!! route('orders.show',$order->id) !!}',--}}
                     ajax: {
                         url: '{!! route('orders.show', $order->id) !!}',
                         dataSrc: 'data.items' // Access the items array within the data object
@@ -179,7 +176,6 @@
                     ],
                 });
                 table.draw();
-
             });
 
             // Store
@@ -210,7 +206,7 @@
                 });
             })
 
-            $('#add_grade').on('click',function (e){
+            $('#add_menu_item').on('click',function (e){
                 e.preventDefault();
                     let id = $(this).data('id')
                 $.ajax({
@@ -253,7 +249,6 @@
                     order_id : order_id,
                     type : type,
                 }
-                // console.log('data befor ajax :'data);
                 console.log("Request URL: " + "{{ route('order_items.update',"id") }}".replace("id", order_id))
 
                 $.ajax({
@@ -269,10 +264,6 @@
                         console.log(data);
                         $('#myFormAdd').trigger('reset');
                         $('#dataTable').DataTable().ajax.reload();
-
-                        // $('input[name="Name_en"]').val(data.Name.en)
-                        // $('textarea[name="Notes"]').val(data.Notes)
-                        // $('input[name="id"]').val(data.id)
                     },
                     error: function (data) {
                         console.log(data)
@@ -284,65 +275,7 @@
 
             })
 
-            // Update
-            {{--$(function () {--}}
-            {{--    $('#myFormEdit').submit(function (event) {--}}
-            {{--        event.preventDefault();--}}
-            {{--        const formData = $(this).serializeArray();--}}
-            {{--        let id = $('input[name="id"]').val()--}}
-            {{--        $.ajax({--}}
-            {{--            headers: {--}}
-            {{--                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-            {{--            },--}}
-            {{--            type: 'PUT',--}}
-            {{--            url: "{{ route('Grades.update',"") }}" + '/' + id,--}}
-            {{--            --}}{{--url: "{{ route('Grades.update', ['id' => '']) }}" + '/' + id,--}}
-            {{--            data: formData,--}}
-            {{--            dataType: 'json',--}}
-            {{--            success: function (response) {--}}
-            {{--                $('#myFormEditphp').trigger('reset');--}}
-            {{--                $('#dataTable').DataTable().ajax.reload();--}}
-            {{--                $('.close').click()--}}
 
-            {{--                toastr.success('{{ trans('toastr.added_successfully')}}');--}}
-
-            {{--            },--}}
-            {{--            error: function (xhr, status, error) {--}}
-            {{--                toastr.error('{{trans('toastr.error_occurred')}}}');--}}
-            {{--            }--}}
-            {{--        })--}}
-            {{--    });--}}
-            {{--})--}}
-
-
-            //  Delete item
-            {{--$('#dataTable').on('click', '.delete', function () {--}}
-            {{--    var id = $(this).data("id");--}}
-            {{--    // confirm("Are You sure want to delete this Post!");--}}
-            {{--    $.ajax({--}}
-            {{--        headers: {--}}
-            {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-            {{--        },--}}
-            {{--        type: "DELETE",--}}
-            {{--        url: "{{ route('Grades.destroy',"") }}" + '/' + id,--}}
-            {{--        success: function (data) {--}}
-            {{--            $('#dataTable').DataTable().ajax.reload();--}}
-            {{--            // toastr.success('تم الحذف  بنجاح');--}}
-            {{--            toastr.success('{{ trans('toastr.deleted_successfully')}}');--}}
-            {{--        },--}}
-            {{--        error: function (data) {--}}
-            {{--            toastr.error('{{trans('toastr.error_occurred')}}');--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--});--}}
-
-            $(function () {
-                $("#dataTable").DataTable({
-                    "responsive": true, "lengthChange": false, "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#dataTable .col-md-6:eq(0)');
-
-            });
 
         </script>
 @endpush

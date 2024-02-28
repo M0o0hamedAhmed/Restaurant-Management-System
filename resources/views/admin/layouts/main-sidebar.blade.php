@@ -90,6 +90,28 @@
                 </li>
                 @endcan
 
+                @can('view permissions')
+                    <li class="nav-item">
+                        <a href="{{route('permissions.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                {{__('Permissions')}}
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('view roles')
+                    <li class="nav-item">
+                        <a href="{{route('roles.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                {{__('Roles')}}
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

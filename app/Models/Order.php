@@ -13,7 +13,8 @@ class Order extends Model
         'id',
         'user_id',
         'total',
-        'status'
+        'status',
+        'description'
     ];
 
 
@@ -32,6 +33,11 @@ class Order extends Model
     public static function getTableName()
     {
         return with(new static)->getTable();
+    }
+
+    public function scopeLatestPending($query, $count = 5)
+    {
+        return $query->where('status','pending')->latest()->take($count);
     }
 
 

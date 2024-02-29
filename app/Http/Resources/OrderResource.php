@@ -18,6 +18,8 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'total' => $this->total,
             'status' => $this->status,
+            'description' => $this->description,
+            'created_at' => $this->created_at,
             'items' => OrderDetailsResource::collection($this->menu_items)
         ];
     }

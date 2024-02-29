@@ -1,5 +1,5 @@
 @php
-    $title =  ucfirst($status) . ' ' . __('Orders')
+    $title =  ucfirst($status ?? '') . ' ' . __('Orders')
 @endphp
 @extends('admin.layouts.master')
 @section('title','Dashboard')

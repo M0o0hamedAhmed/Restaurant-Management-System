@@ -26,6 +26,7 @@ class OrderRequest extends FormRequest
             'menu_items' => 'required|array',
             'menu_items.*.menu_item_id' => 'required|exists:'.MenuItem::getTableName().',id',
             'menu_items.*.quantity' => 'required|min:1|integer',
+            'description' => 'nullable'
         ];
     }
 }

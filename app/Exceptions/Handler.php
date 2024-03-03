@@ -2,10 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -41,6 +44,9 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $class = match ($e->getModel()) {
                 User::class => 'User',
+                Category::class => 'Category',
+                Permission::class => 'Permission',
+                Role::class => 'Role',
                 default => 'record'
             };
 

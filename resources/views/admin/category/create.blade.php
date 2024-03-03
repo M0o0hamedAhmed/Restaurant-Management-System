@@ -42,6 +42,9 @@
                     <div class="card-footer ">
                         <button type="submit" class="btn btn-primary d-flex justify-content-end">Submit</button>
                     </div>
+                    @if(session('success'))
+                        {{session('success')}}
+                    @endif
                 </form>
             </div>
             <!-- /.card -->
@@ -54,6 +57,12 @@
 @push('scripts')
 
     @include('admin.layouts.script_form')
+    @if(session('success'))
+        <script>
+            toastr.success('{{trans('toastr.complete order')}}');
+
+        </script>
+    @endif
 
 @endpush
 

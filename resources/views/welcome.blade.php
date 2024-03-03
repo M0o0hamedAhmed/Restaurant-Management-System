@@ -11,7 +11,7 @@
 @endsection
 @section('content')
     <div class="row">
-
+{{--@livewire('category')--}}
     </div>
 @endsection
 @push('scripts')

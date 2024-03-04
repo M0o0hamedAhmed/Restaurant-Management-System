@@ -4,7 +4,7 @@
     @include('admin.layouts.head')
     @include('admin.layouts.style_form')
     {{--    @section('title', $title ?? 'Page Title')--}}
-    <title>{{ $title ?? 'Page Title' }}</title>
+    <title>{{ $title ?? config('app.name' ,'Laravel') }}</title>
 
 </head>
 <body>

@@ -10,6 +10,8 @@
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <!-- toastr -->
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+{{--<script src="{{ asset('js/tailwind-3.4.1.css') }}"></script>--}}
 
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 @stack('scripts')

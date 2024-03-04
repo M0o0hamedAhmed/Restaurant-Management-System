@@ -21,8 +21,8 @@
         </div>
         <!-- /.card-body -->
 
-        <div class="card-footer ">
-            <button wire:click.prevent="store" type="submit"
+        <div wire:loading.remove class="card-footer ">
+            <button  wire:click.prevent="store" type="submit"
                     class="btn btn-primary d-flex justify-content-end bg-blue">Submit
             </button>
             <span class="right badge badge-primary">{{session('success')}}</span>

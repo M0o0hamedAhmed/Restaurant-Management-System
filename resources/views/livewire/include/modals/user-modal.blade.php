@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-user">
+<div class=" modal fade" id="modal-user">
     <div class="modal-dialog modal-xl"> {{--modal-xl  modal-lg modal-sm--}}
         <div class="modal-content"> {{--bg-success  bg-danger bg-warning bg-info bg-secondary bg-primary--}}
             {{--            <div class="overlay" wire:loading wire:target="image">--}}
@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form wire:submit="store">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
@@ -55,6 +55,7 @@
                                        placeholder="Enter mobile number "
                                        value="{{old('phone_number')}}" required>
                                 @if($errors->has('phone_number'))
+                                    <i class="nav-icon far fa-dot-circle text-danger">{{$errors}}</i>
                                     @foreach($errors->get('phone_number') as $error)
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
@@ -144,9 +145,9 @@
                         </div>
 
 
-                        {{--                        <button wire:click="store" type="submit"--}}
-                        {{--                                class="btn btn-primary d-flex justify-content-end bg-blue">Submit--}}
-                        {{--                        </button>--}}
+                        <button type="submit"
+                                class="btn btn-primary d-flex justify-content-end bg-blue">Submittttt
+                        </button>
 
                     </div>
                 </form>
@@ -154,7 +155,7 @@
             </div>
 
             <div class="modal-footer justify-content-between">
-                @include('livewire/include/buttons/save-close-modal-button')
+                {{--                @include('livewire/include/buttons/save-close-modal-button')--}}
             </div>
         </div>
         <!-- /.modal-content -->

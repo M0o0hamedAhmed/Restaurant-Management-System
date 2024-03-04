@@ -1,6 +1,6 @@
 <div>
     @include('livewire/include/create')
-    @include('livewire/include/search-box')
+    @include('livewire.include.search-box.debounce-search-box')
     <div>
         @if(session('error'))
             <h1>{{session('error')}}</h1>

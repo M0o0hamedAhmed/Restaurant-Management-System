@@ -73,11 +73,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return [];
     }
 
-    public function setPhoneNumberAttribute($value)
-    {
-        // Remove dashes from the phone number
-        $this->attributes['phone_number'] = '0020' . substr(str_replace(['-', '_'], '', $value), -11);
-    }
+//    public function setPhoneNumberAttribute($value)
+//    {
+//        // Remove dashes from the phone number
+//        $this->attributes['phone_number'] = '0020' . substr(str_replace(['-', '_'], '', $value), -11);
+//    }
 
 //    public function roles(): BelongsToMany
 //    {

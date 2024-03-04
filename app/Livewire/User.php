@@ -4,12 +4,16 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use \App\Models\User as UserModel;
 
+#[Title('Users')]
+#[Layout('components.layouts.app')]
 class User extends Component
 {
     use WithPagination;
@@ -59,6 +63,7 @@ class User extends Component
 
     public function store()
     {
+        $this->validate();
         $data = $this->validate();
         try {
             if ($this->image) {
@@ -67,8 +72,8 @@ class User extends Component
             $data['created_by'] = auth()->user()->getAuthIdentifier();
             $user = \App\Models\User::query()->create($data);
             $user->assignRole($data['role']);
-            Log::info("Create User: user created successfully with id {$user->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
             $this->reset();
+            Log::info("Create User: user created successfully with id {$user->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
         } catch (\Exception $e) {
             Log::error("Create User : system can not   Create User for this error {$e->getMessage()}");
             abort(500);
@@ -76,10 +81,15 @@ class User extends Component
     }
 
 
+    public function placeholder()
+    {
+        return view('livewire.include.placeholder.placeholder');
+    }
     public function render()
     {
+        sleep(2);
         $roles = \Spatie\Permission\Models\Role::query()->get();
         $users = UserModel::query()->where('name', 'like', "%{$this->search}%")->withTrashed()->get();
-        return view('livewire.user', compact('users', 'roles'))->title('User');
+        return view('livewire.user', compact('users', 'roles'));
     }
 }

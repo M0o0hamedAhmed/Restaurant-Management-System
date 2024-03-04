@@ -15,7 +15,7 @@ class Permission extends Component
     use WithPagination;
 
 
-    #[Rule('required|min:3|max:30', as: 'ya permission name 👀')]
+    #[Rule('required|min:3|max:30|unique:permissions,name', as: 'ya permission name 👀')]
     public $name;
 
     public $editingPermissionId;
@@ -29,10 +29,12 @@ class Permission extends Component
 
     public function store()
     {
+        $this->validateOnly('name');
         try {
             $permission = PermissionModel::query()->create($this->validateOnly('name'));
             $this->reset();
             session()->flash('success', 'created');
+            $this->dispatch('permission-created',$permission);
             $this->resetPage();
             Log::info("Create Permission: permission created successfully with id {$permission->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
         } catch (\Exception $e) {
@@ -52,6 +54,8 @@ class Permission extends Component
 
     public function update(PermissionModel $permission)
     {
+        sleep(1);
+
         try {
             $this->validateOnly('editingCategoryName');
             $permission->update(['name' => $this->editingPermissionName]);

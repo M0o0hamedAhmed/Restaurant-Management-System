@@ -3,8 +3,8 @@
         <div class="card">
             <div class="card-header d-flex justify-content-end">
             </div>
-            <!-- /.card-header -->
-            <div class="card-body">
+            <!-- /.card-header [visible -keep-alive  ] -->
+            <div {{$status == 'pending' ? 'wire:poll.visible.5s' : ''}} class="card-body">
                 <table id="order_table" class="table table-bordered table-hover">
                     <thead>
                     <tr>

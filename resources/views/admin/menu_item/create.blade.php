@@ -62,12 +62,12 @@
                                 @endforeach
                             @endif
                         </div>
-                        <div class="form-group">
+                        <div  class="form-group">
                             <label>Minimal</label>
-                            <select class="form-control select2bs4" style="width: 100%;" name="category_id" required>
+                            <select wire:model.live="category_id" class="form-control select2bs4" style="width: 100%;"  required>
                                 <option></option>
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option >{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>

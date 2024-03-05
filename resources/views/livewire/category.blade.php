@@ -1,5 +1,5 @@
 <div>
-    @include('livewire/include/create')
+    @include('livewire.include.modals.category-modal')
     @include('livewire.include.search-box.debounce-search-box')
     <div>
         @if(session('error'))
@@ -9,6 +9,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-end">
+                        @include('livewire/include/buttons/add-button')
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

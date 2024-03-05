@@ -34,6 +34,7 @@ class Category extends Component
             $this->reset();
             session()->flash('success', 'created');
             $this->resetPage();
+            $this->dispatch('category-created');
             Log::info("Create Category: category created successfully with id {$category->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
         } catch (\Exception $e) {
             session()->flash('error',$e->getMessage());

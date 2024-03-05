@@ -71,5 +71,13 @@
 
     });
 </script>
+{{--@script--}}
+{{--@section('script')--}}
+{{--    <script>--}}
+
+{{--    </script>--}}
+{{--@endsection--}}
+{{--@endscript--}}
+
 </body>
 </html>

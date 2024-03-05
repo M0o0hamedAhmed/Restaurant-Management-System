@@ -1,4 +1,4 @@
-<div laz>
+<div>
     @include('livewire.include.search-box.debounce-search-box')
     @include('livewire.include.modals.user-modal')
     {{--    <div class="modal-body">--}}
@@ -144,7 +144,7 @@
 
                 </div>
                 <!-- /.card-header wire:poll -->
-                <div  class="card-body">
+                <div class="card-body">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -192,9 +192,11 @@
                             </tr>
 
                         @endforeach
-
                         </tbody>
                     </table>
+                    <div class="  my-2">
+                        {{ $users->links() }}
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>

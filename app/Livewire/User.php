@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
@@ -19,33 +20,53 @@ class User extends Component
     use WithPagination;
     use WithFileUploads;
 
-    #[Rule('required|string|max:255')]
-    public $name;
+
+    public function rules()
+    {
+        return [
+            'role'    => ValidationRule::exists('roles', 'name'),
+            'name'    => 'required|min:3|max:20',
+            'email'   => 'required|email',
+            'password'=> 'required|confirmed',
+            'image'   => 'nullable',
+            'phone_number'   => 'required|unique:users,phone_number'
+        ];
+    }
+
+//    #[Rule('required|string|min:5|max:255')]
+//    #[Validate]
+    public $name = '';
 
 
-    #[Rule('required|email|unique:users')]
+//    #[Rule('required|email')]
     public $email;
 
 
-    #[Rule('required|confirmed')]
-    public $password;
+//    #[Rule('required|confirmed')]
+    public $password='';
 
 
-    public $password_confirmation;
+    public $password_confirmation='';
 
 
-    #[Rule('nullable|mimes:jpg,png|between:10,4096|image')]
-    public $image;
+//    #[Rule('nullable|mimes:jpg,png|between:10,4096|image')]
+    public $image='';
 
 
-    #[Rule('required|exists:roles,name')]
+//    #[Rule('required|exists:roles,name')]
     public $role;
 
 
-    #[Rule('required|unique:users,phone_number')]
-    public $phone_number;
+//    #[Rule('required|unique:users,phone_number')]
+    public $phone_number='';
 
     public $search;
+
+
+    public function updated($fields)
+    {
+        $this->validateOnly($fields);
+    }
 
 
     public function delete($user_id)
@@ -63,7 +84,7 @@ class User extends Component
 
     public function store()
     {
-        $this->validate();
+//        $this->validate();
         $data = $this->validate();
         try {
             if ($this->image) {
@@ -72,6 +93,8 @@ class User extends Component
             $data['created_by'] = auth()->user()->getAuthIdentifier();
             $user = \App\Models\User::query()->create($data);
             $user->assignRole($data['role']);
+            $this->dispatch('user-created');
+            $this->resetPage();
             $this->reset();
             Log::info("Create User: user created successfully with id {$user->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
         } catch (\Exception $e) {
@@ -85,11 +108,11 @@ class User extends Component
     {
         return view('livewire.include.placeholder.placeholder');
     }
+
     public function render()
     {
-        sleep(2);
         $roles = \Spatie\Permission\Models\Role::query()->get();
-        $users = UserModel::query()->where('name', 'like', "%{$this->search}%")->withTrashed()->get();
+        $users = UserModel::query()->where('name', 'like', "%{$this->search}%")->latest()->paginate();
         return view('livewire.user', compact('users', 'roles'));
     }
 }

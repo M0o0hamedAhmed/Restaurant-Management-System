@@ -1,4 +1,4 @@
-<div class=" modal fade" id="modal-user">
+<div wire:ignore.self class=" modal fade" id="modal-user">
     <div class="modal-dialog modal-xl"> {{--modal-xl  modal-lg modal-sm--}}
         <div class="modal-content"> {{--bg-success  bg-danger bg-warning bg-info bg-secondary bg-primary--}}
             {{--            <div class="overlay" wire:loading wire:target="image">--}}
@@ -11,36 +11,28 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form wire:submit="store">
+                <form wire:submit.prevent="store">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input wire:model="name" type="text"
+                            <input wire:model.live="name" type="text"
                                    class="form-control {{$errors->get('name') ?  'border-danger ': ''}}"
                                    id="name" placeholder="Enter Name"
-                                   value="{{old('name',"")}}" required>
-                            @if($errors->has('name'))
-                                @foreach($errors->get('name') as $error)
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                    </a>
-                                @endforeach
-                            @endif
+                                   value="{{old('name',"")}}">
+                            @error('name')
+                            <div class="error">{{$message}}</div>@enderror
+
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input wire:model="email" type="email"
+                            <input wire:model.blur="email" type="email"
                                    class="form-control  {{$errors->get('email') ?  'border-danger ': ''}}"
                                    id="exampleInputEmail1"
                                    placeholder="Enter email"
-                                   name="email" value="{{old('email','')}}" required>
-                            @if($errors->has('email'))
-                                @foreach($errors->get('email') as $error)
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                    </a>
-                                @endforeach
-                            @endif
+                            >
+                            @error('email')
+                            <div class="error">{{$message}}</div>@enderror
+
                         </div>
                         <!-- phone mask -->
                         <div class="form-group">
@@ -50,41 +42,32 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input wire:model="phone_number" type="number"
-                                       class="form-control  {{$errors->get('phone_number') ?  'border-danger ': ''}}"
+                                <input wire:model.blur="phone_number" type="number"
+                                       class="form-control  {{ $errors->get('phone_number') ?  'border-danger ': ''}}"
                                        placeholder="Enter mobile number "
-                                       value="{{old('phone_number')}}" required>
-                                @if($errors->has('phone_number'))
-                                    <i class="nav-icon far fa-dot-circle text-danger">{{$errors}}</i>
-                                    @foreach($errors->get('phone_number') as $error)
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                        </a>
-                                    @endforeach
-                                @endif
+                                       value="{{old('phone_number')}}">
+
                             </div>
+                            @error('phone_number')
+                            <div class="error">{{$message}}</div>@enderror
                             <!-- /.input group -->
                         </div>
                         <!-- /.form group -->
 
-                        <div class="col-md-6">
+                        <div wire:ignore class="col-md-6">
                             <div class="form-group select2-blue">
                                 <label>Roles Name</label>
-                                <select wire:model="role" class="  select2" multiple="multiple"
+                                <select wire:model.blur="role" class="  select2" multiple="multiple"
                                         data-placeholder="Select a State"
-                                        style="width: 100%;">
+                                        style="width: 100%;" multiple>
                                     @foreach($roles as $role)
                                         <option>{{$role->name}}</option>
                                     @endforeach
                                 </select>
+                                @error('role')
+                                <div class="error">{{$message}}</div>@enderror
 
-                                @if($errors->has('roles'))
-                                    @foreach($errors->get('roles') as $error)
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                        </a>
-                                    @endforeach
-                                @endif
+
                             </div>
                             <!-- /.form-group -->
                         </div>
@@ -92,31 +75,23 @@
 
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input wire:model="password" type="password"
+                            <input wire:model.blur="password" type="password"
                                    class="form-control  {{$errors->get('password') ?  'border-danger ': ''}}"
-                                   placeholder="Password" required>
-                            @if($errors->has('password'))
-                                @foreach($errors->get('password') as $error)
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                    </a>
-                                @endforeach
-                            @endif
+                                   placeholder="Password">
+                            @error('password')
+                            <div class="error">{{$message}}</div>@enderror
+
                         </div>
 
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password Confirmation</label>
-                            <input wire:model="password_confirmation" type="password"
+                            <input wire:model.blur="password_confirmation" type="password"
                                    class="form-control  {{$errors->get('password_confirmation') ?  'border-danger ': ''}}"
                                    id="exampleInputPassword1"
-                                   placeholder="password confirmation" name="password_confirmation" required>
-                            @if($errors->has('password_confirmation'))
-                                @foreach($errors->get('password_confirmation') as $error)
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                    </a>
-                                @endforeach
-                            @endif
+                                   placeholder="password confirmation" name="password_confirmation">
+                            @error('password_confirmation')
+                            <div class="error">{{$message}}</div>@enderror
+
                         </div>
 
                         <div class="form-group">
@@ -125,17 +100,12 @@
 
                             <div>
                                 <label for="formFileLg" class="form-label">Large file input example</label>
-                                <input wire:model="image" accept="image/png, image/jpeg"
+                                <input wire:model.blur="image" accept="image/png, image/jpeg"
                                        class="form-control form-control-lg" id="formFileLg" type="file">
                             </div>
+                            @error('image')
+                            <div class="error">{{$message}}</div>@enderror
 
-                            @if($errors->has('image'))
-                                @foreach($errors->get('image') as $error)
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon far fa-dot-circle text-danger">{{$error}}</i>
-                                    </a>
-                                @endforeach
-                            @endif
 
 
                             @if($image)
@@ -146,7 +116,7 @@
 
 
                         <button type="submit"
-                                class="btn btn-primary d-flex justify-content-end bg-blue">Submittttt
+                                class="btn btn-primary d-flex justify-content-end bg-blue">Submit from user model
                         </button>
 
                     </div>
@@ -162,3 +132,17 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+@script
+<script>
+
+    $wire.on('user-created', () => {
+        $('#modal-user').modal('hide');
+
+        Toast.fire({
+            icon: 'success',
+            title: 'The user has been added successfully.'
+        })
+    });
+</script>
+@endscript

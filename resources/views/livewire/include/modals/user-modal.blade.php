@@ -47,11 +47,12 @@
                         <div wire:ignore class="col-md-6">
                             <div class="form-group select2-blue">
                                 <label>Roles Name</label>
-                                <select wire:model.live="multiRole" class="  select2" multiple="multiple"
+                                <select class="form-control select2" wire:model.live="multiRole" multiple="multiple"
+                                        id="multiRoleSelect"
                                         data-placeholder="Select a State"
                                         style="width: 100%;" multiple>
                                     @foreach($roles as $role)
-                                        <option value="{{$role->name}}">{{$role->name}}</option>
+                                        <option >{{$role->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('role')
@@ -96,12 +97,6 @@
                             @endif
                             @include('livewire/include/overlay-loading/overlay')
                         </div>
-
-
-                        {{--                        <button type="submit"--}}
-                        {{--                                class="btn btn-primary d-flex justify-content-end bg-blue">Submit from user model--}}
-                        {{--                        </button>--}}
-
                         <div class="modal-footer justify-content-between">
                             @include('livewire/include/buttons/save-close-modal-button')
                         </div>
@@ -119,11 +114,23 @@
 @script
 <script>
     $wire.on('user-created', () => {
+        // reset select input after store
+        $('#multiRoleSelect').val(null).trigger('change');
+        // close model after store
         $('#modal-open').modal('hide');
 
+        //sweet alert after user create
         Toast.fire({
             icon: 'success',
             title: 'The user has been added successfully.'
+        })
+    });
+
+    $(document).ready(function () {
+        // update value for select unput after every change
+        $('#multiRoleSelect').on('change', function () {
+            let data = $(this).val();
+            $wire.set('multiRole', data, false);
         })
     });
 </script>

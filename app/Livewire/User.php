@@ -110,7 +110,9 @@ class User extends Component
             $this->dispatch('user-created');
             $this->resetPage();
             $this->reset();
-            $this->role = [];
+            $this->multiRole = [];
+            $this->multiRole = null;
+            $this->multiRole = '';
             $this->iteration++;
             Log::info("Create User: user created successfully with id {$user->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
         } catch (\Exception $e) {
@@ -131,7 +133,6 @@ class User extends Component
         $this->email = $user->email;
         $this->image  = $user->image;
         $this->phone_number  = $user->phone_number;
-//        $this->multiRole  = $user->getRoleNames();
         $this->multiRole  = $user->roles->pluck('id')->toArray();
     }
 

@@ -27,7 +27,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'phone_number',
         'password',
         'created_by',
-        'image'
+        'image',
+        'provider',
+        'provider_id',
+        'provider_token'
     ];
 
     /**
@@ -38,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+        'provider_token'
     ];
 
     /**
@@ -48,6 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'provider_token' => 'encrypted'
     ];
     protected $table = 'users';
     public $timestamps = true;

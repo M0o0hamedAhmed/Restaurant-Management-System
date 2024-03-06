@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders_items', OrderItem::class);
 
 
+
+
 //    Route::resource('users', UserController::class);
 //    Route::resource('categories', CategoryController::class);
 //    Route::resource('permissions', PermissionController::class);

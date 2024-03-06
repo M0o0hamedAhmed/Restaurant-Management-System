@@ -52,7 +52,7 @@
                                         data-placeholder="Select a State"
                                         style="width: 100%;" multiple>
                                     @foreach($roles as $role)
-                                        <option >{{$role->name}}</option>
+                                        <option selected value="{{$role->id}}" >{{$role->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('role')
@@ -127,6 +127,7 @@
     });
 
     $(document).ready(function () {
+        $('#multiRoleSelect').select2();
         // update value for select unput after every change
         $('#multiRoleSelect').on('change', function () {
             let data = $(this).val();

@@ -48,4 +48,13 @@
             </x-primary-button>
         </div>
     </form>
+<div class="social-auth-links text-center mb-3">
+    <p>- OR -</p>
+    <a href="{{route('auth.redirect','facebook')}}" class="btn btn-block btn-primary">
+        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+    </a>
+    <a href="{{route('auth.redirect','google')}}" class="btn btn-block btn-danger">
+        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+    </a>
+</div>
 </x-guest-layout>

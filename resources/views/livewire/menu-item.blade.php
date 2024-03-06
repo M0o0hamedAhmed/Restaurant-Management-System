@@ -1,4 +1,3 @@
-
 <div>
     @include('livewire.include.modals.menu_item-modal')
     @include('livewire.include.search-box.debounce-search-box')
@@ -23,7 +22,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($menu_items as $menu_item)
+                        @forelse($menu_items as $menu_item)
                             <tr>
                                 <td>{{$menu_item->id}}</td>
                                 <td>{{$menu_item->name}}</td>
@@ -33,7 +32,9 @@
                                 <td>   @include('livewire/include/buttons/edit-delete-action',$item = $menu_item) </td>
 
                             </tr>
-                        @endforeach
+                        @empty
+                            <td colspan="7"> No Menu-items defined.</td>
+                        @endforelse
 
                         </tbody>
                     </table>

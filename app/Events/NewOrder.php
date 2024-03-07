@@ -16,6 +16,7 @@ class NewOrder implements ShouldDispatchAfterCommit,ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+
     /**
      * Create a new event instance.
      */

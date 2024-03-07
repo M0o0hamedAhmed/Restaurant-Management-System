@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
@@ -31,6 +32,7 @@ class UserController extends BaseController
         $seed = $storeUserRequest->validated();
         try {
             $user = User::query()->create($seed);
+            Auth::login($user);
             Log::info("Create User: user created successfully with id {$user->id} ");
             return $this->sendResponse(new UserResource($user));
         } catch (\Exception $e) {

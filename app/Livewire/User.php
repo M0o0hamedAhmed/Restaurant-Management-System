@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
@@ -52,6 +51,8 @@ class User extends Component
 //    #[Rule('required|unique:users,phone_number')]
     public $phone_number = '';
 
+    public $user_id ='';
+
     public $search;
 
     //to reset image
@@ -59,6 +60,7 @@ class User extends Component
 
     public function mount(\App\Models\User $user)
     {
+
         $this->user = $user;
 
     }
@@ -66,15 +68,26 @@ class User extends Component
 
     public function rules()
     {
-
-        return [
-            'multiRole' => ['required',ValidationRule::exists('roles', 'name')],
+        $storeValidation = [
+            'multiRole' => 'required|exists:roles,name',
             'name' => 'required|min:3|max:20',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
             'image' => 'nullable',
-            'phone_number' => 'required|unique:users,phone_number|numeric|digits_between:11,15|starts_with:011,012,015,010'
+//            'phone_number' => 'required|unique:users,phone_number|numeric|digits_between:11,15|starts_with:011,012,015,010'
+            'phone_number' => 'required'
         ];
+        $updateValidation = [
+            'multiRole' => 'nullable|exists:roles,name',
+            'name' => 'required|min:3|max:20',
+            'email' => 'required|email|unique:users,email,'.$this->user_id,
+            'image' => 'nullable',
+            'phone_number' => 'required',
+            'user_id' => 'required',
+            'password' => 'nullable|confirmed',
+        ];
+
+        return $this->editMode ?  $updateValidation : $storeValidation;
     }
 
 
@@ -118,6 +131,20 @@ class User extends Component
         }
     }
 
+    public function update(){
+       $data =  $this->validate();
+        try {
+            $user = \App\Models\User::query()->findOrFail($data['user_id']);
+            $user->update($data);
+            $user->syncRoles($data['multiRole']);
+            $this->dispatch('user-updated');
+            Log::info("Update User: user updated successfully with id {$user->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
+        } catch (\Exception $e) {
+            Log::error("Update User : system can not   update User for this error {$e->getMessage()}");
+            session()->flash('error' , $e->getMessage() );
+        }
+    }
+
 
 
 
@@ -126,11 +153,12 @@ class User extends Component
     {
         $this->editMode=true;
         $this->user = $user;
+        $this->user_id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
         $this->image  = $user->image;
         $this->phone_number  = $user->phone_number;
-        $this->multiRole  = $user->roles->pluck('id')->toArray();
+        $this->multiRole  = $user->roles->pluck('name')->toArray();
     }
 
 

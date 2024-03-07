@@ -1,5 +1,6 @@
 <div wire:ignore.self class=" modal fade" id="modal-open">
 
+
     <div class="modal-dialog modal-xl"> {{--modal-xl  modal-lg modal-sm--}}
         <div class="modal-content"> {{--bg-success  bg-danger bg-warning bg-info bg-secondary bg-primary--}}
             {{--            <div class="overlay" wire:loading wire:target="image">--}}
@@ -12,9 +13,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form wire:submit.prevent="store">
+                <form wire:submit.prevent={{$editMode ? "update" : "store"}}>
                     <div class="card-body">
                         @include('livewire/include/inputs/input-name')
+                        <input wire:model.live="user_id">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
                             <input wire:model.live="email" type="email"
@@ -46,13 +48,23 @@
 
                         <div wire:ignore class="col-md-6">
                             <div class="form-group select2-blue">
-                                <label>Roles Name</label>
+                                {{--                              [start - blockc]  this block for only test--}}
+                                <h1 class="text-red">roles must show here : {{ implode(',', $multiRole) }}</h1>
+                                <label>Roles Name. selected Roles
+                                    @forelse($multiRole as $role)
+                                        {{$role}}
+                                    @empty
+                                        not
+                                    @endforelse  {{implode(',',$multiRole)}}</label>
+                                {{--                              [start - blockc]  this block for only test--}}
+                                <label>Roles</label>
                                 <select class="form-control select2" wire:model.live="multiRole" multiple="multiple"
                                         id="multiRoleSelect"
                                         data-placeholder="Select a State"
                                         style="width: 100%;" multiple>
                                     @foreach($roles as $role)
-                                        <option selected value="{{$role->id}}" >{{$role->name}}</option>
+                                        <option
+                                            @selected(in_array($role->name,$multiRole))  value="{{$role->name}}">{{$role->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('role')
@@ -87,9 +99,10 @@
                             <div>
                                 <label for="formFileLg" class="form-label">Large file input example</label>
                                 <input wire:model.live="image" accept="image/png, image/jpeg"
-                                       class="form-control form-control-lg" id="upload({{$iteration}})" type="file" >
+                                       class="form-control form-control-lg" id="upload({{$iteration}})" type="file">
                             </div>
-                            @error('image')<div class="error">{{$message}}</div>@enderror
+                            @error('image')
+                            <div class="error">{{$message}}</div>@enderror
 
 
                             @if($image && !$editMode)
@@ -123,6 +136,19 @@
         Toast.fire({
             icon: 'success',
             title: 'The user has been added successfully.'
+        })
+    });
+
+    $wire.on('user-updated', () => {
+        // reset select input after store
+        $('#multiRoleSelect').val(null).trigger('change');
+        // close model after store
+        $('#modal-open').modal('hide');
+
+        //sweet alert after user create
+        Toast.fire({
+            icon: 'success',
+            title: 'The user has been updated successfully.'
         })
     });
 

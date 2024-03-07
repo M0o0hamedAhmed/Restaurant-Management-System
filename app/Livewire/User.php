@@ -74,15 +74,14 @@ class User extends Component
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
             'image' => 'nullable',
-//            'phone_number' => 'required|unique:users,phone_number|numeric|digits_between:11,15|starts_with:011,012,015,010'
-            'phone_number' => 'required'
+            'phone_number' => 'required|unique:users,phone_number|numeric|digits_between:11,15|starts_with:011,012,015,010'
         ];
         $updateValidation = [
             'multiRole' => 'nullable|exists:roles,name',
             'name' => 'required|min:3|max:20',
             'email' => 'required|email|unique:users,email,'.$this->user_id,
             'image' => 'nullable',
-            'phone_number' => 'required',
+            'phone_number' => 'required|unique:users,phone_number,'.$this->user_id.'|numeric|digits_between:11,15|starts_with:011,012,015,010',
             'user_id' => 'required',
             'password' => 'nullable|confirmed',
         ];

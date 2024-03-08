@@ -22,9 +22,8 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $notifications_count = Order::query()->where('status','pending')->count();
-            $notifications = Order::query()->LatestPending()->get();
-            $view->with(compact('notifications_count','notifications'));
+            $notifications = Order::query()->where('status','pending')->get();
+            $view->with(compact('notifications'));
         });
     }
 }

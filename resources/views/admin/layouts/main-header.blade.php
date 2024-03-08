@@ -17,15 +17,15 @@
         <li class="nav-item dropdown dropdown-notification">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span id="notifications_count" data-count="{{$notifications_count}}"
-                      class="badge badge-warning navbar-badge">{{$notifications_count}}</span>
+                <span id="notifications_count" data-count="{{count($notifications)}}"
+                      class="badge badge-warning navbar-badge">{{count($notifications)}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right overflow-auto "
                  style="max-height: 200px; overflow-y: auto;">
-                <span class="dropdown-item dropdown-header">{{$notifications_count}}  Orders</span>
+                <span class="dropdown-item dropdown-header">{{count($notifications)}}  Orders</span>
                 {{--                <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>--}}
                 <div id="notification_container"></div>
-                @foreach($notifications as $notification)
+                @foreach($notifications->take(5) as $notification)
                     <div class="dropdown-divider"></div>
                     <a wire:navigate href="" class="dropdown-item">
                         <i class="fas fa-envelope mr-2"></i> {{substr($notification->description,0,15)}}

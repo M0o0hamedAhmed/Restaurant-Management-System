@@ -41,40 +41,40 @@
 {{--                                <td>{!! $category?->lowestPriceMenuItem?->name .' <br> '. $category?->lowestPriceMenuItem?->price . ' EGP '!!}</td>--}}
 {{--                                <td>--}}
 
-{{--                                    <div class="input-group input-group-lg mb-3">--}}
-{{--                                        <div class="input-group-prepend">--}}
-{{--                                            <button type="button" class="btn btn-info dropdown-toggle"--}}
-{{--                                                    data-toggle="dropdown">--}}
-{{--                                                Actions--}}
-{{--                                            </button>--}}
-{{--                                            <ul class="dropdown-menu">--}}
-{{--                                                <li class="dropdown-item"><a class="btn " href="{{route('categories.edit',$category->id)}}">Edit</a>--}}
-{{--                                                </li>--}}
-{{--                                                <form method="post" action="{{route('categories.destroy',$category->id)}}">--}}
-{{--                                                    @csrf--}}
-{{--                                                    @method('delete')--}}
-{{--                                                    <li class="dropdown-item">--}}
-{{--                                                        <button class="btn" type="submit">Delete</button>--}}
-{{--                                                    </li>--}}
-{{--                                                </form>--}}
-{{--                                            </ul>--}}
-{{--                                        </div>--}}
-{{--                                        <!-- /btn-group -->--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
+                                    <div class="input-group input-group-lg mb-3">
+                                        <div class="input-group-prepend">
+                                            <button type="button" class="btn btn-info dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-item"><a class="btn " href="{{route('categories.edit',$category->id)}}">Edit</a>
+                                                </li>
+                                                <form method="post" action="{{route('categories.destroy',$category->id)}}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <li class="dropdown-item">
+                                                        <button class="btn" type="submit">Delete</button>
+                                                    </li>
+                                                </form>
+                                            </ul>
+                                        </div>
+                                        <!-- /btn-group -->
+                                    </div>
+                                </td>
 
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
+                            </tr>
+                        @endforeach
 
-{{--                        </tbody>--}}
-{{--                    </table>--}}
-{{--                </div>--}}
-{{--                <!-- /.card-body -->--}}
-{{--            </div>--}}
-{{--            <!-- /.card -->--}}
-{{--        </div>--}}
-{{--        <!-- /.col -->--}}
-{{--    </div>--}}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
 
 @endsection
 @push('scripts')

@@ -27,7 +27,7 @@ class CategoryController extends Controller
     public function index()
     {
 
-        $categories = Category::query()->get();
+        $categories = Category::query()->withCount('menuItem')->get();
         return view($this->classView . 'index', compact('categories'));
     }
 

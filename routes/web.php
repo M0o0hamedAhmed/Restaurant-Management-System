@@ -35,7 +35,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', Dashboard::class)->middleware(['auth'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {

@@ -84,6 +84,6 @@ class Category extends Component
 
     public function render()
     {
-        return view('livewire.category', ['categories' => CategoryModel::latest()->where('name', 'like', "%{$this->search}%")->paginate(10)])->title('Categories');
+        return view('livewire.category', ['categories' => CategoryModel::withCount('menuItem')->latest()->where('name', 'like', "%{$this->search}%")->paginate(10)])->title('Categories');
     }
 }

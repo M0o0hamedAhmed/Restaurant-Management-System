@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised();
         });
 
-        Model::preventLazyLoading(! app()->isProduction());
+//        Model::preventLazyLoading(! app()->isProduction());
         Paginator::useBootstrap();
     }
 }

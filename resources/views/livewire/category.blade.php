@@ -45,7 +45,7 @@
                                             {{$category->name}}
                                         @endif
                                     </td>
-                                    <td>{{$category->menuItem->count()}}</td>
+                                    <td>{{$category->menuItem_count}}</td>
                                     <td>{!! $category?->latestMenuItem?->name .' <br> '. $category?->latestMenuItem?->price . ' EGP '!!}</td>
                                     <td>{!! $category?->lowestPriceMenuItem?->name .' <br> '. $category?->lowestPriceMenuItem?->price . ' EGP '!!}</td>
                                     <td>

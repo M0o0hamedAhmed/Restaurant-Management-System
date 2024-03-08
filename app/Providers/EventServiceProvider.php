@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\NewOrder;
+use App\Events\NewMenuItem;
+use App\Listeners\SendMailForNewMenuItem;
 use App\Listeners\SendMailForNewOrder;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewOrder::class => [
             SendMailForNewOrder::class
+        ],
+        NewMenuItem::class => [
+            SendMailForNewMenuItem::class
         ]
     ];
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\dashboard;
 
+use App\Events\NewMenuItem;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMenuItemRequest;
 use App\Models\Category;
@@ -50,6 +51,7 @@ class MenuItemController extends Controller
         $data = $request->validated();
         try {
             $menu_item = MenuItem::query()->create($data);
+             NewMenuItem::dispatch($menu_item);
             Log::info("Create MenuItem: MenuItem created successfully with id {$menu_item->id} by user id ". Auth::id() . ' and  name is '. Auth::user()->name);
         }catch (\Exception $e){
             Log::error("Create MenuItem : system can not   create MenuItem for this error {$e->getMessage()}");

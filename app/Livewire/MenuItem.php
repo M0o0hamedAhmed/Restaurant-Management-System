@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Events\NewMenuItem;
+use App\Jobs\SendMails;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule as ValidationRule;
@@ -36,6 +39,10 @@ class MenuItem extends Component
             $this->dispatch('menu-item-created');
             $this->reset();
             $this->resetPage();
+            $all_users = User::chunk(5,function ($users){
+                dispatch(New SendMails($users));
+            });
+//            NewMenuItem::dispatch($menu_item);
             Log::info("Create MenuItem: MenuItem created successfully with id {$menu_item->id} by user id " . Auth::id() . ' and  name is ' . Auth::user()->name);
         } catch (\Exception $e) {
             Log::error("Create MenuItem : system can not   create MenuItem for this error {$e->getMessage()}");
@@ -47,8 +54,12 @@ class MenuItem extends Component
 
     public function render()
     {
-        $menu_items = \App\Models\MenuItem::query()->latest()->where('name','like',"%{$this->search}%")->paginate(config('setting.default_paginate'));
+        $menu_items = \App\Models\MenuItem::query()->withCount('category')->latest()->where('name','like',"%{$this->search}%")->paginate(config('setting.default_paginate'));
         $categories = \App\Models\Category::query()->get();
         return view('livewire.menu-item', compact('menu_items', 'categories'))->title('menu_items');
+    }
+
+    private function sendEmailForAllUsers(){
+
     }
 }
